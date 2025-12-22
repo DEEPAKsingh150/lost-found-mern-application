@@ -1,72 +1,53 @@
-# Lost & Found Backend API
+# Lost and Found Application
 
-Backend API for the Lost and Found application built with Node.js, Express, and MongoDB.
+## Project Description
+This is a Lost and Found web application where users can report lost items
+and found items. It helps people reconnect with their belongings.
+
+## Technologies Used
+- Frontend: HTML, CSS, JavaScript
+- Backend: Node.js, Express.js
+- Database: Mongodb,mysql
 
 ## Features
+- User Registration & Login
+- Add Lost Item
+- Add Found Item
+- Search Items
+- Admin Approval
 
-- ✅ RESTful API Architecture
-- ✅ User Authentication (JWT)
-- ✅ Password Hashing (bcrypt)
-- ✅ MongoDB Database
-- ✅ Input Validation
-- ✅ Protected Routes
-- ✅ CORS Enabled
+## Final Output Screenshots
 
-## Tech Stack
+### Home Page
+![Home Page](screenshots/home_page.png)
 
-- **Node.js** - Runtime environment
-- **Express.js** - Web framework
-- **MongoDB** - Database
-- **Mongoose** - ODM for MongoDB
-- **bcryptjs** - Password hashing
-- **jsonwebtoken** - JWT authentication
-- **express-validator** - Input validation
-- **cors** - Cross-origin resource sharing
+### Add Lost Item Page
+![Add Item](screenshots/add_lost_item.png)
 
-## Installation
+### Login Page
+![Login](screenshots/login_page.png)
 
-### Prerequisites
-- Node.js (v14 or higher)
-- MongoDB (local or Atlas)
+## How to Run
+1. Import database from `database/lost_and_found.sql`
+2. Run backend server
+3. Open frontend in browser
 
-### Setup
+Home page:
 
-1. **Install dependencies:**
-```bash
-npm install
-```
+![Home page of our Application](Home.png)
 
-2. **Configure environment variables:**
+Login page:
 
-Create a `.env` file in the root directory:
+![sign up page](Login.png)
 
-```env
-PORT=5000
-MONGODB_URI=mongodb://localhost:27017/lost-and-found
-JWT_SECRET=your_jwt_secret_key_change_this_in_production
-NODE_ENV=development
-```
+Register page:
 
-3. **Start MongoDB:**
-```bash
-mongod
-# Or use MongoDB Atlas connection string
-```
+![Registration page](Register.png)
 
-4. **Run the server:**
+Additem page:
 
-Development mode (with nodemon):
-```bash
-npm run dev
-```
+![Additem page](<Additem 1.png>)
 
-Production mode:
-```bash
-npm start
-```
+Myitem page:
 
-The API will be available at: `http://localhost:5000`
-
-## API Endpoints
-
-### Authentication Routes
+![Myitem page](Myitem.png)
