@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import './ItemDetails.css';
@@ -6,36 +6,37 @@ import './ItemDetails.css';
 const ItemDetails = ({ user }) => {
   const { id } = useParams();
   const navigate = useNavigate();
+
   const [item, setItem] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
 
-  useEffect(() => {
-    fetchItem();
-  }, [id]);
-
-  const fetchItem = async () => {
+  // ✅ 1. DEFINE fetchItem FIRST
+  const fetchItem = useCallback(async () => {
     try {
+      setLoading(true);
       const res = await axios.get(`/api/items/${id}`);
       setItem(res.data);
-      setLoading(false);
+      setError('');
     } catch (err) {
       setError('Item not found');
+    } finally {
       setLoading(false);
     }
-  };
+  }, [id]);
+
+  // ✅ 2. THEN use it
+  useEffect(() => {
+    fetchItem();
+  }, [fetchItem]);
 
   const handleDelete = async () => {
     if (window.confirm('Are you sure you want to delete this item?')) {
       try {
         const token = localStorage.getItem('token');
-        const config = {
-          headers: {
-            'x-auth-token': token
-          }
-        };
-
-        await axios.delete(`/api/items/${id}`, config);
+        await axios.delete(`/api/items/${id}`, {
+          headers: { 'x-auth-token': token }
+        });
         navigate('/');
       } catch (err) {
         alert('Failed to delete item');
@@ -46,14 +47,12 @@ const ItemDetails = ({ user }) => {
   const handleMarkResolved = async () => {
     try {
       const token = localStorage.getItem('token');
-      const config = {
-        headers: {
-          'x-auth-token': token
-        }
-      };
-
       const updatedItem = { ...item, resolved: true };
-      await axios.put(`/api/items/${id}`, updatedItem, config);
+
+      await axios.put(`/api/items/${id}`, updatedItem, {
+        headers: { 'x-auth-token': token }
+      });
+
       setItem(updatedItem);
     } catch (err) {
       alert('Failed to update item');
@@ -83,12 +82,15 @@ const ItemDetails = ({ user }) => {
     <div className="item-details-page">
       <div className="container">
         <div className="item-details-container">
+
           <div className="item-header">
             <div>
               <span className={`badge badge-${item.status}`}>
                 {item.status === 'lost' ? '❌ Lost' : '✅ Found'}
               </span>
-              {item.resolved && <span className="badge badge-resolved">Resolved</span>}
+              {item.resolved && (
+                <span className="badge badge-resolved">Resolved</span>
+              )}
             </div>
             <span className="item-category-badge">{item.category}</span>
           </div>
@@ -117,29 +119,24 @@ const ItemDetails = ({ user }) => {
             <p>📞 {item.contactInfo}</p>
           </div>
 
-          {isOwner && (
-            <div className="item-actions">
-              <button onClick={() => navigate(`/`)} className="btn btn-secondary">
-                Back to Home
+          <div className="item-actions">
+            <button onClick={() => navigate('/')} className="btn btn-secondary">
+              Back to Home
+            </button>
+
+            {isOwner && !item.resolved && (
+              <button onClick={handleMarkResolved} className="btn btn-success">
+                Mark as Resolved
               </button>
-              {!item.resolved && (
-                <button onClick={handleMarkResolved} className="btn btn-success">
-                  Mark as Resolved
-                </button>
-              )}
+            )}
+
+            {isOwner && (
               <button onClick={handleDelete} className="btn btn-danger">
                 Delete Item
               </button>
-            </div>
-          )}
+            )}
+          </div>
 
-          {!isOwner && (
-            <div className="item-actions">
-              <button onClick={() => navigate('/')} className="btn btn-primary">
-                Back to Home
-              </button>
-            </div>
-          )}
         </div>
       </div>
     </div>
