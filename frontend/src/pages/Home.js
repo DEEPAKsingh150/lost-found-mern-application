@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect,useCallback } from 'react';
 import { Link } from 'react-router-dom';
 import axios from 'axios';
 import './Home.css';
@@ -13,27 +13,22 @@ const Home = ({ user }) => {
     search: ''
   });
 
-  useEffect(() => {
-    fetchItems();
-  }, []);
-
-  useEffect(() => {
-    filterItems();
-  }, [filters, items]);
-
-  const fetchItems = async () => {
+  // ✅ 1. Fetch items on mount
+  const fetchItems = useCallback(async () => {
     try {
+      setLoading(true);
       const res = await axios.get('/api/items');
       setItems(res.data);
       setFilteredItems(res.data);
-      setLoading(false);
     } catch (err) {
       console.error(err);
+    } finally {
       setLoading(false);
     }
-  };
+  }, []);
 
-  const filterItems = () => {
+  // ✅ 2. Filter logic (defined BEFORE useEffect)
+  const filterItems = useCallback(() => {
     let filtered = [...items];
 
     if (filters.status) {
@@ -45,20 +40,32 @@ const Home = ({ user }) => {
     }
 
     if (filters.search) {
+      const searchText = filters.search.toLowerCase();
       filtered = filtered.filter(item =>
-        item.title.toLowerCase().includes(filters.search.toLowerCase()) ||
-        item.description.toLowerCase().includes(filters.search.toLowerCase())
+        item.title.toLowerCase().includes(searchText) ||
+        item.description.toLowerCase().includes(searchText)
       );
     }
 
     setFilteredItems(filtered);
-  };
+  }, [items, filters]);
+
+  // ✅ 3. Load data once
+  useEffect(() => {
+    fetchItems();
+  }, [fetchItems]);
+
+  // ✅ 4. Re-filter when data or filters change
+  useEffect(() => {
+    filterItems();
+  }, [filterItems]);
 
   const handleFilterChange = (e) => {
-    setFilters({
-      ...filters,
-      [e.target.name]: e.target.value
-    });
+    const { name, value } = e.target;
+    setFilters(prev => ({
+      ...prev,
+      [name]: value
+    }));
   };
 
   if (loading) {
@@ -69,7 +76,7 @@ const Home = ({ user }) => {
     <div className="home-page">
       <div className="hero-section">
         <div className="container">
-          <h1> Lost & Found</h1>
+          <h1>Lost & Found</h1>
           <p>Lost something? Let’s bring it back where it belongs.</p>
         </div>
       </div>
@@ -77,6 +84,7 @@ const Home = ({ user }) => {
       <div className="container">
         <div className="filters-section card">
           <h2>Search & Filter</h2>
+
           <div className="filters-grid">
             <div className="form-group">
               <input
@@ -87,6 +95,7 @@ const Home = ({ user }) => {
                 onChange={handleFilterChange}
               />
             </div>
+
             <div className="form-group">
               <select name="status" value={filters.status} onChange={handleFilterChange}>
                 <option value="">All Status</option>
@@ -94,6 +103,7 @@ const Home = ({ user }) => {
                 <option value="found">Found</option>
               </select>
             </div>
+
             <div className="form-group">
               <select name="category" value={filters.category} onChange={handleFilterChange}>
                 <option value="">All Categories</option>
@@ -132,12 +142,17 @@ const Home = ({ user }) => {
                   </span>
                   <span className="item-category">{item.category}</span>
                 </div>
+
                 <h3>{item.title}</h3>
-                <p className="item-description">{item.description.substring(0, 100)}...</p>
+                <p className="item-description">
+                  {item.description.substring(0, 100)}...
+                </p>
+
                 <div className="item-info">
                   <span>📍 {item.location}</span>
                   <span>📅 {new Date(item.date).toLocaleDateString()}</span>
                 </div>
+
                 <div className="item-footer">
                   <span className="posted-by">Posted by: {item.userName}</span>
                 </div>
