@@ -2,13 +2,13 @@
   background-repeat: no-repeat;
   background-attachment: fixed;
   min-height: 100vh;  padding-bottom: 40px;
-  background-image: url('c:\Users\Admin\OneDrive\Pictures\lost.webp');
+  background-image: url("C:\Users\Admin\OneDrive\Desktop\Lost Found Mern\frontend\public\lost.webp");
   background-size: cover;
   background-position: center;
 }
 
 .hero-section {
-  background-image: url('c:\Users\Admin\OneDrive\Pictures\lost 1.avif');
+  background-image: url("C:\Users\Admin\OneDrive\Desktop\Lost Found Mern\frontend\public\lost1.avif");
   /* background: linear-gradient(135deg, #f0b5b5 0%, #764ba2 100%); */
   color: rgba(2, 0, 0, 0.87);
   height: 250px;

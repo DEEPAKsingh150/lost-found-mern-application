@@ -2,7 +2,6 @@ import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import axios from 'axios';
 import './MyItems.css';
-
 const MyItems = ({ user }) => {
   const [items, setItems] = useState([]);
   const [loading, setLoading] = useState(true);
