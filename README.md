@@ -19,14 +19,13 @@ and found items. It helps people reconnect with their belongings.
 ## Final Output Screenshots
 
 ### Home Page
-![Home Page](<img width="1920" height="1030" alt="Home" src="https://github.com/user-attachments/assets/884c737f-9a52-4b1e-bef6-16563409d0bc" />
-)
+
 
 ### Add Lost Item Page
-![Add Item](screenshots/add_lost_item.png)
+
 
 ### Login Page
-![Login](screenshots/login_page.png)
+
 
 ## How to Run
 1. Import database from `database/lost_and_found.sql`
@@ -35,20 +34,20 @@ and found items. It helps people reconnect with their belongings.
 
 Home page:
 
-![Home page of our Application](Home.png)
+
 
 Login page:
 
-![sign up page](Login.png)
+
 
 Register page:
 
-![Registration page](Register.png)
+
 
 Additem page:
 
-![Additem page](<Additem 1.png>)
+
 
 Myitem page:
 
-![Myitem pag
+
