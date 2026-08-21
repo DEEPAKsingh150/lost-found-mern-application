@@ -19,7 +19,8 @@ and found items. It helps people reconnect with their belongings.
 ## Final Output Screenshots
 
 ### Home Page
-![Home Page](screenshots/home_page.png)
+![Home Page](<img width="1920" height="1030" alt="Home" src="https://github.com/user-attachments/assets/884c737f-9a52-4b1e-bef6-16563409d0bc" />
+)
 
 ### Add Lost Item Page
 ![Add Item](screenshots/add_lost_item.png)
