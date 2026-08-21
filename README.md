@@ -19,35 +19,24 @@ and found items. It helps people reconnect with their belongings.
 ## Final Output Screenshots
 
 ### Home Page
-
-
-### Add Lost Item Page
+<img width="1920" height="1030" alt="Home" src="https://github.com/user-attachments/assets/d38bcf5d-3cf7-4112-bc8f-a0e80c8569b1" />
 
 
 ### Login Page
+
+
+### Register Page
+
+
+### Additem Page
+
+
+### Myitem Page
 
 
 ## How to Run
 1. Import database from `database/lost_and_found.sql`
 2. Run backend server
 3. Open frontend in browser
-
-Home page:
-
-
-
-Login page:
-
-
-
-Register page:
-
-
-
-Additem page:
-
-
-
-Myitem page:
 
 
